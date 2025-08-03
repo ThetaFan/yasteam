@@ -55,6 +55,10 @@
     a.link-gofile {
       color: #90ee90;
     }
+    
+    a.link-ranoz {
+      color: #ff9800;
+    }
 
     a:hover {
       text-decoration: underline;
@@ -100,6 +104,7 @@
       const id1 = getParamValue("id1");
       const id2 = getParamValue("id2");
       const id3 = getParamValue("id3");
+      const id4 = getParamValue("id4");
 
       const userAgent = navigator.userAgent.toLowerCase();
       const isYandex = userAgent.includes("yabrowser");
@@ -129,10 +134,11 @@
         `;
       } else {
         let links = "";
-        if (id1) links += `<p><a href="https://pixeldrain.com/u/${id1}" target="_blank" class="link-pixeldrain">Скачать с PixelDrain</a></p>`;
-        if (id2) links += `<p><a href="https://www.mediafire.com/file/${id2}" target="_blank" class="link-mediafire">Скачать с MediaFire</a></p>`;
-        if (id3) links += `<p><a href="https://gofile.io/d/${id3}" target="_blank" class="link-gofile">Скачать с GoFile</a></p>`;
-        if (!id1 && !id2 && !id3) links += `<p>Ссылки для скачивания не найдены.</p>`;
+        if (id1) links += `<p><a href="https://pixeldrain.com/u/${id1}" target="_blank" class="link-pixeldrain">Скачать с PIXELDRAIN</a></p>`;
+        if (id2) links += `<p><a href="https://www.mediafire.com/file/${id2}" target="_blank" class="link-mediafire">Скачать с MEDIAFIRE</a></p>`;
+        if (id3) links += `<p><a href="https://gofile.io/d/${id3}" target="_blank" class="link-gofile">Скачать с GOFILE</a></p>`;
+        if (id4) links += `<p><a href="https://ranoz.gg/file/${id4}" target="_blank" class="link-ranoz">Скачать с RANOZ</a></p>`;
+        if (!id1 && !id2 && !id3 && !id4) links += `<p>Ссылки для скачивания не найдены.</p>`;
 
         htmlBelowLogo += links;
       }
