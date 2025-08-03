@@ -60,10 +60,6 @@
       text-decoration: underline;
     }
 
-    .hidden {
-      display: none;
-    }
-
     .buttons {
       display: flex;
       justify-content: center;
@@ -94,56 +90,55 @@
       return params.get(key);
     }
 
-    function renderLogoAndLinks() {
+    function renderContent() {
       const logo = getParamValue("logo");
       const id1 = getParamValue("id1");
       const id2 = getParamValue("id2");
       const id3 = getParamValue("id3");
 
+      const userAgent = navigator.userAgent.toLowerCase();
+      const isYandex = userAgent.includes("yabrowser");
+
       const logoContainer = document.createElement('div');
       logoContainer.className = 'logo-container';
 
-      // Логотип (всегда)
+      // логотип (всегда)
       if (logo && !isNaN(logo)) {
         logoContainer.innerHTML = `<img src="https://steamcdn-a.akamaihd.net/steam/apps/${logo}/capsule_616x353.jpg" alt="Game logo">`;
       }
 
-      // Ссылки
-      let linksHTML = "";
-      if (id1) linksHTML += `<p><a href="https://pixeldrain.com/u/${id1}" target="_blank" class="link-pixeldrain">Скачать с PixelDrain</a></p>`;
-      if (id2) linksHTML += `<p><a href="https://www.mediafire.com/file/${id2}" target="_blank" class="link-mediafire">Скачать с MediaFire</a></p>`;
-      if (id3) linksHTML += `<p><a href="https://gofile.io/d/${id3}" target="_blank" class="link-gofile">Скачать с GoFile</a></p>`;
+      let htmlBelowLogo = "";
 
-      if (!id1 && !id2 && !id3) {
-        linksHTML = `<p>Ссылки для скачивания не найдены.</p>`;
+      if (!isYandex) {
+        htmlBelowLogo += `
+          <h2>Для доступа к файлам используйте Яндекс.Браузер</h2>
+          <p>Установите Я.Браузер, сделайте его основным и заново откройте эту страницу.</p>
+          <div class="buttons">
+            <a href="https://browser.yandex.ru/download?partner_id=831050&banerid=1312095879" target="_blank">
+              <button>Скачать Я.Браузер на ПК</button>
+            </a>
+            <a href="https://redirect.appmetrica.yandex.com/serve/389430554958814120?clid=12799475" target="_blank">
+              <button>Скачать Я.Браузер на Андроид</button>
+            </a>
+          </div>
+        `;
+      } else {
+        let links = "";
+        if (id1) links += `<p><a href="https://pixeldrain.com/u/${id1}" target="_blank" class="link-pixeldrain">Скачать с PixelDrain</a></p>`;
+        if (id2) links += `<p><a href="https://www.mediafire.com/file/${id2}" target="_blank" class="link-mediafire">Скачать с MediaFire</a></p>`;
+        if (id3) links += `<p><a href="https://gofile.io/d/${id3}" target="_blank" class="link-gofile">Скачать с GoFile</a></p>`;
+        if (!id1 && !id2 && !id3) links += `<p>Ссылки для скачивания не найдены.</p>`;
+
+        htmlBelowLogo += links;
       }
 
-      logoContainer.innerHTML += linksHTML;
+      logoContainer.innerHTML += htmlBelowLogo;
       document.body.appendChild(logoContainer);
     }
 
-    window.onload = function () {
-      renderLogoAndLinks();
-
-      const userAgent = navigator.userAgent.toLowerCase();
-      if (!userAgent.includes("yabrowser")) {
-        document.getElementById("content").classList.remove("hidden");
-      }
-    };
+    window.onload = renderContent;
   </script>
 </head>
 <body>
-  <div id="content" class="hidden">
-    <h2>Для доступа к файлам рекомендуется Яндекс.Браузер</h2>
-    <p>Установите Я.Браузер, сделайте его основным и заново откройте эту страницу.</p>
-    <div class="buttons">
-      <a href="https://browser.yandex.ru/download?partner_id=831050&banerid=1312095879" target="_blank">
-        <button>Скачать Я.Браузер на ПК</button>
-      </a>
-      <a href="https://redirect.appmetrica.yandex.com/serve/389430554958814120?clid=12799475" target="_blank">
-        <button>Скачать Я.Браузер на Андроид</button>
-      </a>
-    </div>
-  </div>
 </body>
 </html>
