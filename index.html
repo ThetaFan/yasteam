@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Файлы для скачивания</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #121212, #1e1e1e);
+      color: #f0e6dd;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+      flex-direction: column;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .logo-container {
+      margin-bottom: 30px;
+      max-width: 616px;
+      width: 100%;
+      margin-top: 0;
+    }
+
+    .logo-container img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    h2 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    a {
+      color: #90ee90;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      background-color: #90ee90;
+      border: none;
+      border-radius: 8px;
+      color: black;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #7fd87f;
+    }
+  </style>
+
+  <script>
+    function getParamValue(key) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(key);
+    }
+
+    function showLogoAndLinks() {
+      const logo = getParamValue("logo");
+      const id1 = getParamValue("id1");
+      const id2 = getParamValue("id2");
+      const id3 = getParamValue("id3");
+
+      const logoContainer = document.createElement('div');
+      logoContainer.className = 'logo-container';
+
+      // Логотип
+      if (logo && !isNaN(logo)) {
+        logoContainer.innerHTML = `<img src="https://steamcdn-a.akamaihd.net/steam/apps/${logo}/capsule_616x353.jpg" alt="Game logo">`;
+      }
+
+      // Ссылки
+      let linksHTML = "";
+      if (id1) linksHTML += `<p><a href="https://pixeldrain.com/u/${id1}" target="_blank">Скачать с PixelDrain</a></p>`;
+      if (id2) linksHTML += `<p><a href="https://www.mediafire.com/file/${id2}" target="_blank">Скачать с MediaFire</a></p>`;
+      if (id3) linksHTML += `<p><a href="https://gofile.io/d/${id3}" target="_blank">Скачать с GoFile</a></p>`;
+
+      if (linksHTML) {
+        logoContainer.innerHTML += linksHTML;
+      }
+
+      document.body.appendChild(logoContainer);
+    }
+
+    window.onload = function () {
+      const userAgent = navigator.userAgent.toLowerCase();
+
+      if (!userAgent.includes("yabrowser")) {
+        document.getElementById("content").classList.remove("hidden");
+        return;
+      }
+
+      showLogoAndLinks();
+    };
+  </script>
+</head>
+<body>
+  <div id="content" class="hidden">
+    <h2>Для доступа к файлам используйте Яндекс.Браузер</h2>
+    <p>Установите Я.Браузер, сделайте его основным и заново откройте эту страницу.</p>
+    <div class="buttons">
+      <a href="https://browser.yandex.ru/download?partner_id=831050&banerid=1312095879" target="_blank">
+        <button>Скачать Я.Браузер на ПК</button>
+      </a>
+      <a href="https://redirect.appmetrica.yandex.com/serve/389430554958814120?clid=12799475" target="_blank">
+        <button>Скачать Я.Браузер на Андроид</button>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
