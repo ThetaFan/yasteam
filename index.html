@@ -82,9 +82,15 @@
     button:hover {
       background-color: #7fd87f;
     }
+    
     .warning {
       color: red;
     }
+
+    .no-wrap {
+      white-space: nowrap;
+    }
+    
   </style>
 
   <script>
@@ -115,7 +121,7 @@
       if (!isYandex) {
         htmlBelowLogo += `
           <h2 class="warning">Для доступа к файлам используйте Я.Браузер</h2>
-          <p>Установите Я.Браузер, сделайте его основным и заново откройте эту страницу.</p>
+          <p class="no-wrap">Установите Я.Браузер, сделайте его основным и заново откройте эту страницу</p>
           <div class="buttons">
             <a href="https://browser.yandex.ru/download?partner_id=831050&banerid=1312095879" target="_blank">
               <button>Скачать Я.Браузер на ПК</button>
