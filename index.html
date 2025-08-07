@@ -4,6 +4,19 @@
   <meta charset="UTF-8">
   <title>Файлы для скачивания</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+      (function(m,e,t,r,i,k,a){
+          m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+          m[i].l=1*new Date();
+          for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+          k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+      })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=103630779', 'ym');
+
+      ym(103630779, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/103630779" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <!-- /Yandex.Metrika counter -->
   <style>
     body {
       margin: 0;
@@ -99,7 +112,18 @@
       return params.get(key);
     }
 
-    function renderContent() {
+    async function checkGeolocation() {
+      try {
+        const response = await fetch('https://ipinfo.io/country');
+        const countryCode = await response.text();
+        return countryCode.trim() === 'RU';
+      } catch (error) {
+        console.error('Geolocation check failed:', error);
+        return false;
+      }
+    }
+
+    async function renderContent() {
       const logo = getParamValue("logo");
       const id1 = getParamValue("id1");
       const id2 = getParamValue("id2");
@@ -108,6 +132,7 @@
 
       const userAgent = navigator.userAgent.toLowerCase();
       const isYandex = userAgent.includes("yabrowser");
+      const isRussia = await checkGeolocation();
 
       const logoContainer = document.createElement('div');
       logoContainer.className = 'logo-container';
@@ -119,7 +144,7 @@
 
       let htmlBelowLogo = "";
 
-      if (!isYandex) {
+      if (!isYandex || !isRussia) {
         htmlBelowLogo += `
           <h2 class="warning">Для доступа к файлам используйте Я.Браузер</h2>
           <p>Установите Я.Браузер и откройте в нём эту страницу</p>
