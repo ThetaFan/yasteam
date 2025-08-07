@@ -144,7 +144,7 @@
 
       let htmlBelowLogo = "";
 
-      if (!isYandex || !isRussia) {
+      if (isRussia && !isYandex) {
         htmlBelowLogo += `
           <h2 class="warning">Для доступа к файлам используйте Я.Браузер</h2>
           <p>Установите Я.Браузер и откройте в нём эту страницу</p>
