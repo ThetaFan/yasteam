@@ -48,11 +48,6 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
 
-    h2 {
-      font-size: 28px;
-      margin-bottom: 10px;
-    }
-
     p {
       font-size: 18px;
       margin-bottom: 20px;
@@ -83,16 +78,10 @@
       text-decoration: underline;
     }
 
-    .warning {
-      color: red;
-    }
-    
     .download-message {
+      color: #90ee90;
       font-size: 20px;
       margin: 20px 0;
-      padding: 20px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
       max-width: 500px;
     }
     
@@ -100,7 +89,6 @@
       font-weight: bold;
       display: block;
       margin-bottom: 10px;
-      font-size: 22px;
     }
     
     .yandex-browser {
@@ -172,10 +160,10 @@
       if (isRussia && !isYandex) {
         // Показываем сообщение о скачивании
         htmlBelowLogo += `
-          <div class="download-message">
+          <p class="download-message">
             <span class="download-started">Скачивание началось!</span>
             После установки откройте эту страницу в <span class="yandex-browser">Я.Браузере</span> и получите ссылки на игру
-          </div>
+          </p>
         `;
         
         logoContainer.innerHTML += htmlBelowLogo;
