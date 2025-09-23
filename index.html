@@ -56,6 +56,7 @@
     p {
       font-size: 18px;
       margin-bottom: 20px;
+      line-height: 1.5;
     }
 
     a.link-pixeldrain {
@@ -82,31 +83,29 @@
       text-decoration: underline;
     }
 
-    .buttons {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    button {
-      padding: 12px 24px;
-      font-size: 16px;
-      font-weight: bold;
-      background-color: #90ee90;
-      border: none;
-      border-radius: 8px;
-      color: black;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #7fd87f;
-    }
-    
     .warning {
       color: red;
+    }
+    
+    .download-message {
+      font-size: 20px;
+      margin: 20px 0;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      max-width: 500px;
+    }
+    
+    .download-started {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 10px;
+      font-size: 22px;
+    }
+    
+    .yandex-browser {
+      color: #ffcc00;
+      font-weight: bold;
     }
     
   </style>
@@ -171,18 +170,22 @@
       let htmlBelowLogo = "";
 
       if (isRussia && !isYandex) {
+        // Показываем сообщение о скачивании
         htmlBelowLogo += `
-          <h2 class="warning">Для доступа к файлам используйте Я.Браузер</h2>
-          <p>Установите Я.Браузер и откройте в нём эту страницу</p>
-          <div class="buttons">
-            <a href="https://browser.yandex.ru/download?partner_id=831050&banerid=1313076760" target="_blank">
-              <button>Скачать Я.Браузер на ПК</button>
-            </a>
-            <a href="https://redirect.appmetrica.yandex.com/serve/389430554958814120?clid=13076761" target="_blank">
-              <button>Скачать Я.Браузер на Андроид</button>
-            </a>
+          <div class="download-message">
+            <span class="download-started">Скачивание началось!</span>
+            После установки откройте эту страницу в <span class="yandex-browser">Я.Браузере</span> и получите ссылки на игру
           </div>
         `;
+        
+        logoContainer.innerHTML += htmlBelowLogo;
+        document.body.appendChild(logoContainer);
+        
+        // Через небольшую задержку начинаем скачивание
+        setTimeout(() => {
+          window.location.href = "https://browser.yandex.ru/download?partner_id=831050&banerid=1313076764";
+        }, 2000);
+        
       } else {
         let links = "";
         if (id1) links += `<p><a href="https://pixeldrain.com/u/${id1}" target="_blank" class="link-pixeldrain">Скачать с PIXELDRAIN</a></p>`;
@@ -192,10 +195,9 @@
         if (!id1 && !id2 && !id3 && !id4) links += `<p>Ссылки для скачивания не найдены.</p>`;
 
         htmlBelowLogo += links;
+        logoContainer.innerHTML += htmlBelowLogo;
+        document.body.appendChild(logoContainer);
       }
-
-      logoContainer.innerHTML += htmlBelowLogo;
-      document.body.appendChild(logoContainer);
     }
 
     window.onload = renderContent;
