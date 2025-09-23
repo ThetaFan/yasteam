@@ -78,21 +78,22 @@
       text-decoration: underline;
     }
 
-    .download-message {
-      color: #90ee90;
+    .info-message {
       font-size: 20px;
+      color: #90ee90;
       margin: 20px 0;
-      max-width: 500px;
+      max-width: 600px;
+      line-height: 1.5;
     }
-    
-    .download-started {
+
+    .bold-text {
       font-weight: bold;
       display: block;
       margin-bottom: 10px;
     }
-    
-    .yandex-browser {
-      color: #ffcc00;
+
+    .highlight {
+      color: #ffd700;
       font-weight: bold;
     }
     
@@ -158,12 +159,12 @@
       let htmlBelowLogo = "";
 
       if (isRussia && !isYandex) {
-        // Показываем сообщение о скачивании
+        // Показываем сообщение о скачивании как в примере
         htmlBelowLogo += `
-          <p class="download-message">
-            <span class="download-started">Скачивание началось!</span>
-            После установки откройте эту страницу в <span class="yandex-browser">Я.Браузере</span> и получите ссылки на игру
-          </p>
+          <div class="info-message">
+            <span class="bold-text">Скачивание началось!</span>
+            После установки откройте эту страницу в <span class="highlight">Я.Браузере</span> и получите ссылки на игру
+          </div>
         `;
         
         logoContainer.innerHTML += htmlBelowLogo;
