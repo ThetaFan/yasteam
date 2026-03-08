@@ -84,19 +84,17 @@
       margin: 20px 0;
       max-width: 1000px;
       line-height: 1.5;
-      white-space: nowrap;
     }
 
     .bold-text {
       font-weight: bold;
-      display: inline;
-      margin-bottom: 0;
+      display: block;
+      margin-bottom: 10px;
     }
 
     .highlight {
       color: #ffd700;
       font-weight: bold;
-      display: inline;
     }
     
     .bonus-message-yellow {
@@ -104,13 +102,12 @@
       color: #ffd700;
       font-weight: bold;
       margin: 20px 0;
-      padding: 15px 25px;
+      padding: 15px;
       border: 2px solid #ffd700;
       border-radius: 10px;
       background-color: rgba(255, 215, 0, 0.1);
       max-width: 800px;
       animation: glow-yellow 2s ease-in-out infinite alternate;
-      white-space: nowrap;
     }
     
     .bonus-message-yellow a {
@@ -118,7 +115,6 @@
       text-decoration: none;
       border-bottom: 2px dashed #ffd700;
       transition: all 0.3s ease;
-      white-space: nowrap;
     }
     
     .bonus-message-yellow a:hover {
@@ -175,7 +171,10 @@
         const appData = data[logoId];
         
         if (appData && appData.success && appData.data && appData.data.header_image) {
+          // Убираем экранирование слешей
           const headerImageUrl = appData.data.header_image.replace(/\\\//g, '/');
+          
+          // Проверяем, что изображение действительно доступно
           const isImageAvailable = await checkImage(headerImageUrl);
           if (isImageAvailable) {
             return headerImageUrl;
@@ -190,11 +189,12 @@
     }
     
     function showBonusMessageYellow() {
+      // Проверяем, есть ли уже бонусное сообщение
       if (!document.querySelector('.bonus-message-yellow')) {
         const bonusDiv = document.createElement('div');
         bonusDiv.className = 'bonus-message-yellow';
         const bonusLink = "https://yandex.ru/project/browser/bonus/multioffer/affiliate_4prod?source=pWRP8eS1VsC2X59560&partner_string=P89XvN11U6RuE47077&cliddbro=14080813&clidmbro=14080806&cliddefault=14080820&clidpp=14185506";
-        bonusDiv.innerHTML = `✨ <a href="${bonusLink}" target="_blank" rel="noopener noreferrer">БОНУС: Установи Я.Браузер сегодня и получи до 800 рублей на телефон!</a> 🎁`;
+        bonusDiv.innerHTML = `✨ <a href="${bonusLink}" target="_blank" rel="noopener noreferrer">БОНУС: Установи Я.Браузер сегодня и получи до 800 рублей на телефон!</a> ⭐`;
         return bonusDiv;
       }
       return null;
@@ -214,24 +214,31 @@
       const logoContainer = document.createElement('div');
       logoContainer.className = 'logo-container';
 
+      // Получаем логотип через Steam API
       if (logo && !isNaN(logo)) {
         const logoUrl = await getLogoUrlFromSteamAPI(logo);
         if (logoUrl) {
           logoContainer.innerHTML = `<img src="${logoUrl}" alt="Game logo">`;
+        } else {
+          console.log('Логотип не найден для ID:', logo);
+          // Можно добавить заглушку или ничего не выводить
         }
       }
 
       let htmlBelowLogo = "";
 
       if (isRussia && !isYandex) {
+        // Показываем сообщение о скачивании
         htmlBelowLogo += `
           <div class="info-message">
-            <span class="bold-text">Скачивание началось!</span>\n После установки откройте эту страницу в <span class="highlight">Я.Браузере</span> и получите ссылки на игру
+            <span class="bold-text">Скачивание началось!</span>
+            После установки откройте эту страницу в <span class="highlight">Я.Браузере</span> и получите ссылки на игру
           </div>
         `;
         
         logoContainer.innerHTML += htmlBelowLogo;
         
+        // Добавляем бонусное сообщение
         const bonusMessage = showBonusMessageYellow();
         if (bonusMessage) {
           logoContainer.appendChild(bonusMessage);
@@ -239,11 +246,13 @@
         
         document.body.appendChild(logoContainer);
         
+        // Через небольшую задержку начинаем скачивание
         setTimeout(() => {
           window.location.href = "https://redirect.appmetrica.yandex.com/serve/1038439893707027542?partner_id=831050&appmetrica_js_redirect=0&full=0&clid=13076761&banerid=1313076760";
         }, 2000);
         
       } else {
+        // Показываем ссылки для скачивания
         let links = "";
         if (id1) links += `<p><a href="https://pixeldrain.com/u/${id1}" target="_blank" class="link-pixeldrain">Скачать с PIXELDRAIN</a></p>`;
         if (id2) links += `<p><a href="https://www.mediafire.com/file/${id2}" target="_blank" class="link-mediafire">Скачать с MEDIAFIRE</a></p>`;
@@ -254,6 +263,7 @@
         htmlBelowLogo += links;
         logoContainer.innerHTML += htmlBelowLogo;
         
+        // Добавляем бонусное сообщение для пользователей в России с Яндекс.Браузером
         if (isRussia && isYandex) {
           const bonusMessage = showBonusMessageYellow();
           if (bonusMessage) {
