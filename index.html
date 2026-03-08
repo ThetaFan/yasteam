@@ -155,37 +155,25 @@
       });
     }
 
-    async function getLogoUrlFromSteamAPI(logoId) {
-      if (!logoId || isNaN(logoId)) return null;
-      
-      try {
-        const apiUrl = `https://store.steampowered.com/api/appdetails?appids=${logoId}&l=english`;
-        const response = await fetch(apiUrl);
+    // Функция для отображения логотипа игры
+    async function showLogoIfExists() {
+      const logo = getParamValue("logo");
+      if (logo && !isNaN(logo)) {
+        const logoContainer = document.createElement('div');
+        logoContainer.className = 'logo-container';
         
-        if (!response.ok) {
-          console.warn(`Steam API responded with status: ${response.status}`);
-          return null;
-        }
+        const primaryLogoUrl = `https://steamcdn-a.akamaihd.net/steam/apps/${logo}/capsule_616x353.jpg`;
+        const fallbackLogoUrl = `https://steamcdn-a.akamaihd.net/steam/apps/${logo}/header.jpg`;
         
-        const data = await response.json();
-        const appData = data[logoId];
+        const primaryLogoExists = await checkImage(primaryLogoUrl);
         
-        if (appData && appData.success && appData.data && appData.data.header_image) {
-          // Убираем экранирование слешей
-          const headerImageUrl = appData.data.header_image.replace(/\\\//g, '/');
-          
-          // Проверяем, что изображение действительно доступно
-          const isImageAvailable = await checkImage(headerImageUrl);
-          if (isImageAvailable) {
-            return headerImageUrl;
-          }
-        }
+        const logoUrl = primaryLogoExists ? primaryLogoUrl : fallbackLogoUrl;
         
-        return null;
-      } catch (error) {
-        console.error('Error fetching from Steam API:', error);
-        return null;
+        logoContainer.innerHTML = `<img src="${logoUrl}" alt="Game logo">`;
+        document.body.insertBefore(logoContainer, document.body.firstChild);
+        return logoContainer;
       }
+      return null;
     }
     
     function showBonusMessageYellow() {
@@ -201,7 +189,6 @@
     }
 
     async function renderContent() {
-      const logo = getParamValue("logo");
       const id1 = getParamValue("id1");
       const id2 = getParamValue("id2");
       const id3 = getParamValue("id3");
@@ -211,18 +198,13 @@
       const isYandex = userAgent.includes("yabrowser");
       const isRussia = await checkGeolocation();
 
-      const logoContainer = document.createElement('div');
-      logoContainer.className = 'logo-container';
-
-      // Получаем логотип через Steam API
-      if (logo && !isNaN(logo)) {
-        const logoUrl = await getLogoUrlFromSteamAPI(logo);
-        if (logoUrl) {
-          logoContainer.innerHTML = `<img src="${logoUrl}" alt="Game logo">`;
-        } else {
-          console.log('Логотип не найден для ID:', logo);
-          // Можно добавить заглушку или ничего не выводить
-        }
+      // Показываем логотип игры
+      const logoContainer = await showLogoIfExists();
+      
+      // Если логотип не был создан, создаем пустой контейнер
+      const container = logoContainer || document.createElement('div');
+      if (!logoContainer) {
+        container.className = 'logo-container';
       }
 
       let htmlBelowLogo = "";
@@ -236,15 +218,17 @@
           </div>
         `;
         
-        logoContainer.innerHTML += htmlBelowLogo;
+        container.innerHTML += htmlBelowLogo;
         
         // Добавляем бонусное сообщение
         const bonusMessage = showBonusMessageYellow();
         if (bonusMessage) {
-          logoContainer.appendChild(bonusMessage);
+          container.appendChild(bonusMessage);
         }
         
-        document.body.appendChild(logoContainer);
+        if (!logoContainer) {
+          document.body.appendChild(container);
+        }
         
         // Через небольшую задержку начинаем скачивание
         setTimeout(() => {
@@ -260,18 +244,19 @@
         if (id4) links += `<p><a href="https://ranoz.gg/file/${id4}" target="_blank" class="link-ranoz">Скачать с RANOZ</a></p>`;
         if (!id1 && !id2 && !id3 && !id4) links += `<p>Ссылки для скачивания не найдены.</p>`;
 
-        htmlBelowLogo += links;
-        logoContainer.innerHTML += htmlBelowLogo;
+        container.innerHTML += links;
         
         // Добавляем бонусное сообщение для пользователей в России с Яндекс.Браузером
         if (isRussia && isYandex) {
           const bonusMessage = showBonusMessageYellow();
           if (bonusMessage) {
-            logoContainer.appendChild(bonusMessage);
+            container.appendChild(bonusMessage);
           }
         }
         
-        document.body.appendChild(logoContainer);
+        if (!logoContainer) {
+          document.body.appendChild(container);
+        }
       }
     }
 
