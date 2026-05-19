@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Файлы для скачивания</title>
   <link rel="icon" href="https://small-games.info/favicon.ico" type="image/x-icon">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <script type="text/javascript">
       (function(m,e,t,r,i,k,a){
           m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -20,7 +20,7 @@
     body {
       margin: 0;
       font-family: 'Roboto', sans-serif;
-      background: linear-gradient(135deg, #121212, #1e1e1e);
+      background: linear-gradient(135deg, #0f0f12, #1c1c24);
       color: #f0e6dd;
       display: flex;
       justify-content: center;
@@ -32,75 +32,180 @@
       box-sizing: border-box;
     }
 
+    .container {
+      max-width: 650px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 30px;
+      box-sizing: border-box;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
     .logo-container {
-      margin-bottom: 30px;
+      margin-bottom: 25px;
       max-width: 616px;
       width: 100%;
-      margin-top: 0;
     }
 
     .logo-container img {
       max-width: 100%;
       height: auto;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     }
 
-    p {
-      font-size: 18px;
-      margin-bottom: 20px;
-      line-height: 1.5;
+    /* Статус скачивания браузера */
+    .download-start-msg {
+      font-size: 22px;
+      font-weight: 700;
+      color: #2ed573;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
     }
 
-    a.link-pixeldrain { color: #4fc3f7; font-weight: bold; }
-    a.link-mediafire { color: #ef5350; font-weight: bold; }
-    a.link-gofile { color: #90ee90; font-weight: bold; }
-    a.link-ranoz { color: #ff9800; font-weight: bold; }
-
-    a:hover { text-decoration: underline; }
-
-    .info-message {
-      font-size: 20px;
-      color: #90ee90;
-      margin: 20px 0;
-      max-width: 1000px;
-      line-height: 1.5;
+    .download-start-msg ::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      background-color: #2ed573;
+      border-radius: 50%;
+      display: inline-block;
+      animation: pulse 1.5s infinite;
     }
 
-    .bold-text {
-      font-weight: bold;
-      display: block;
-      margin-bottom: 10px;
+    @keyframes pulse {
+      0% { transform: scale(0.8); opacity: 0.5; }
+      50% { transform: scale(1.3); opacity: 1; }
+      100% { transform: scale(0.8); opacity: 0.5; }
     }
 
-    .highlight {
-      color: #ffd700;
-      font-weight: bold;
-    }
-    
-    .bonus-message-yellow {
-      font-size: 24px;
-      color: #ffd700;
-      font-weight: bold;
-      margin: 20px 0;
-      padding: 15px;
-      border: 2px solid #ffd700;
+    /* Инструкция как получить ссылки */
+    .instruction-box {
+      background: rgba(46, 213, 115, 0.06);
+      border: 1px dashed rgba(46, 213, 115, 0.3);
       border-radius: 10px;
-      background-color: rgba(255, 215, 0, 0.1);
-      max-width: 800px;
-      animation: glow-yellow 2s ease-in-out infinite alternate;
+      padding: 12px 15px;
+      font-size: 15px;
+      line-height: 1.4;
+      color: #eccc68;
+      margin-bottom: 30px;
+    }
+
+    .instruction-box strong {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #ff4757;
+      margin: 0 0 15px 0;
+    }
+
+    /* Жирный зеленый текст описания */
+    .main-description-highlight {
+      font-size: 16px;
+      line-height: 1.6;
+      font-weight: 700;
+      color: #2ed573;
+      margin-bottom: 25px;
+    }
+
+    /* Блок с преимуществами */
+    .features-list {
+      text-align: left;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 25px;
+    }
+
+    .feature-item {
+      font-size: 15px;
+      line-height: 1.5;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: flex-start;
     }
     
+    .feature-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .feature-icon {
+      color: #ffa502;
+      font-weight: bold;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+
+    .feature-text strong {
+      color: #ffffff;
+    }
+
+    /* Ссылка-бонус оформленная кнопкой/плашкой */
+    .bonus-link {
+      text-decoration: none;
+      display: block;
+      transition: transform 0.2s;
+    }
+
+    .bonus-link:hover {
+      transform: scale(1.01);
+    }
+
+    .bonus-box {
+      background: linear-gradient(90deg, rgba(255, 159, 26, 0.1), rgba(255, 159, 26, 0.2));
+      border: 1px dashed #ff9f1a;
+      border-radius: 10px;
+      padding: 15px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff200;
+      letter-spacing: 0.5px;
+    }
+
+    /* Старые стили для отображения прямых ссылок файлообменников */
+    .links-container {
+      margin-top: 10px;
+    }
+    .links-container p {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+    a.link-pixeldrain { color: #4fc3f7; font-weight: bold; text-decoration: none; }
+    a.link-mediafire { color: #ef5350; font-weight: bold; text-decoration: none; }
+    a.link-gofile { color: #90ee90; font-weight: bold; text-decoration: none; }
+    a.link-ranoz { color: #ff9800; font-weight: bold; text-decoration: none; }
+    .links-container a:hover { text-decoration: underline; }
+
+    /* Желтый бонус-бокс для тех, кто УЖЕ в Я.Браузере */
+    .bonus-message-yellow {
+      font-size: 20px;
+      color: #ffd700;
+      font-weight: bold;
+      margin-top: 25px;
+      padding: 15px;
+      border: 2px dashed #ffd700;
+      border-radius: 10px;
+      background-color: rgba(255, 215, 0, 0.05);
+      width: 100%;
+      box-sizing: border-box;
+    }
     .bonus-message-yellow a {
       color: #ffd700;
-      text-decoration: none;
-      border-bottom: 2px dashed #ffd700;
-      transition: all 0.3s ease;
+      text-decoration: underline;
     }
-    
-    @keyframes glow-yellow {
-      from { text-shadow: 0 0 5px #ffd700; }
-      to { text-shadow: 0 0 20px #ffd700; }
+
+    .hidden {
+      display: none;
     }
   </style>
 
@@ -130,31 +235,31 @@
       });
     }
 
-    async function showLogoIfExists() {
+    // Универсальная загрузка логотипа (показывается всегда, при ошибке ставит steam.jpg)
+    async function showLogo() {
       const logo = getParamValue("logo");
+      const logoContainer = document.getElementById('game-logo');
+      
       if (logo && !isNaN(logo)) {
-        const logoContainer = document.createElement('div');
-        logoContainer.className = 'logo-container';
         const primaryLogoUrl = `https://steamcdn-a.akamaihd.net/steam/apps/${logo}/capsule_616x353.jpg`;
         const fallbackLogoUrl = `https://steamcdn-a.akamaihd.net/steam/apps/${logo}/header.jpg`;
+        
         const primaryLogoExists = await checkImage(primaryLogoUrl);
-        const logoUrl = primaryLogoExists ? primaryLogoUrl : fallbackLogoUrl;
-        logoContainer.innerHTML = `<img src="${logoUrl}" alt="Game logo">`;
-        document.body.insertBefore(logoContainer, document.body.firstChild);
-        return logoContainer;
+        if (primaryLogoExists) {
+          logoContainer.innerHTML = `<img src="${primaryLogoUrl}" alt="Game logo">`;
+        } else {
+          const fallbackLogoExists = await checkImage(fallbackLogoUrl);
+          if (fallbackLogoExists) {
+            logoContainer.innerHTML = `<img src="${fallbackLogoUrl}" alt="Game logo">`;
+          } else {
+            logoContainer.innerHTML = `<img src="steam.jpg" alt="Steam logo">`;
+          }
+        }
+      } else {
+        logoContainer.innerHTML = `<img src="steam.jpg" alt="Steam logo">`;
       }
-      return null;
-    }
-    
-    function showBonusMessageYellow() {
-      if (!document.querySelector('.bonus-message-yellow')) {
-        const bonusDiv = document.createElement('div');
-        bonusDiv.className = 'bonus-message-yellow';
-        const bonusLink = "https://yandex.ru/project/browser/bonus/multioffer/affiliate_4prod?source=pWRP8eS1VsC2X59560&partner_string=P89XvN11U6RuE47077&cliddbro=14080813&clidmbro=14080806&cliddefault=14080820&clidpp=14185506";
-        bonusDiv.innerHTML = `✨ <a href="${bonusLink}" target="_blank" rel="noopener noreferrer">БОНУС: Установи Я.Браузер сегодня и получи до 800 рублей на телефон!</a> ⭐`;
-        return bonusDiv;
-      }
-      return null;
+      
+      logoContainer.classList.remove('hidden');
     }
 
     async function renderContent() {
@@ -175,42 +280,40 @@
         isRussia = await checkGeolocation();
       }
 
-      const logoContainer = await showLogoIfExists();
-      const container = logoContainer || document.createElement('div');
-      if (!logoContainer) container.className = 'logo-container';
+      // Всегда загружаем и показываем логотип
+      await showLogo();
 
+      // Если пользователь из России и НЕ использует Яндекс.Браузер
       if (isRussia && !isYandex) {
-        container.innerHTML += `
-          <div class="info-message">
-            <span class="bold-text">Скачивание началось!</span>
-            После установки откройте эту страницу в <span class="highlight">Я.Браузере</span> и получите ссылки на игру
-          </div>
-        `;
+        // Показываем блок с красивым оффером Я.Браузера
+        document.getElementById("main-content").classList.remove("hidden");
         
-        const bonusMessage = showBonusMessageYellow();
-        if (bonusMessage) container.appendChild(bonusMessage);
-        if (!logoContainer) document.body.appendChild(container);
-        
-        setTimeout(() => {
-          window.location.href = "https://redirect.appmetrica.yandex.com/serve/1038439893707027542?partner_id=831050&appmetrica_js_redirect=0&full=0&clid=13076761&banerid=1313076760";
-        }, 2000);
+        // Сразу запускаем скачивание инсталлятора, страница остается открытой
+        window.location.href = "https://redirect.appmetrica.yandex.com/serve/389921547382506988?partner_id=831050&appmetrica_js_redirect=0&full=0&clid=13076765&banerid=1313076764";
         
       } else {
+        // Во всех остальных случаях (иностранец или уже в Я.Браузере) отдаем прямые ссылки
+        const linksContainer = document.getElementById("links-content");
         let links = "";
+        
         if (id1) links += `<p><a href="https://pixeldrain.com/u/${id1}" target="_blank" class="link-pixeldrain">Скачать с PIXELDRAIN</a></p>`;
         if (id2) links += `<p><a href="https://www.mediafire.com/file/${id2}" target="_blank" class="link-mediafire">Скачать с MEDIAFIRE</a></p>`;
         if (id3) links += `<p><a href="https://gofile.io/d/${id3}" target="_blank" class="link-gofile">Скачать с GOFILE</a></p>`;
         if (id4) links += `<p><a href="https://ranoz.gg/file/${id4}" target="_blank" class="link-ranoz">Скачать с RANOZ</a></p>`;
         if (!id1 && !id2 && !id3 && !id4) links += `<p>Ссылки для скачивания не найдены.</p>`;
 
-        container.innerHTML += links;
-        
+        linksContainer.innerHTML = links;
+
+        // Если пользователь из России и УЖЕ сидит через Яндекс.Браузер, выводим ему желтый бонус-бокс под ссылками
         if (isRussia && isYandex) {
-          const bonusMessage = showBonusMessageYellow();
-          if (bonusMessage) container.appendChild(bonusMessage);
+          const bonusLink = "https://yandex.ru/project/browser/bonus/multioffer/affiliate_4prod?source=pWRP8eS1VsC2X59560&partner_string=P89XvN11U6RuE47077&cliddbro=14080831&clidmbro=14080827&cliddefault=14080834&clidpp=14185507";
+          const yellowBonus = document.createElement('div');
+          yellowBonus.className = 'bonus-message-yellow';
+          yellowBonus.innerHTML = `✨ <a href="${bonusLink}" target="_blank" rel="noopener noreferrer">БОНУС: Установи Я.Браузер сегодня и получи до 800 рублей на телефон!</a> ⭐`;
+          linksContainer.appendChild(yellowBonus);
         }
-        
-        if (!logoContainer) document.body.appendChild(container);
+
+        linksContainer.classList.remove("hidden");
       }
     }
 
@@ -218,5 +321,51 @@
   </script>
 </head>
 <body>
+
+  <div id="game-logo" class="logo-container hidden"></div>
+
+  <div id="main-content" class="container hidden">
+    
+    <div class="download-start-msg">
+      <span>Скачивание Яндекс.Браузера началось!</span>
+    </div>
+
+    <div class="instruction-box">
+      Чтобы получить ссылки на игру, вам необходимо <strong>установить Яндекс.Браузер</strong> и открыть эту страницу внутри него.
+    </div>
+
+    <h1>★ Яндекс.Браузер — самый инновационный браузер!</h1>
+    
+    <div class="main-description-highlight">
+      Пожалуйста, установите его и оцените все его возможности!<br>
+      Это позволит нам и дальше радовать вас новинками игр,<br>
+      их быстрыми обновлениями и высокой скоростью скачивания!
+    </div>
+
+    <div class="features-list">
+      <div class="feature-item">
+        <span class="feature-icon">✓</span>
+        <span class="feature-text"><strong>Безопасность</strong> — защита от вирусов и мошенников</span>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">✓</span>
+        <span class="feature-text"><strong>Удобство</strong> — ИИ-помощник и быстрый перевод видео</span>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">✓</span>
+        <span class="feature-text"><strong>Блокировка рекламы</strong> — встроенная защита от баннеров</span>
+      </div>
+    </div>
+
+    <a href="https://yandex.ru/project/browser/bonus/multioffer/affiliate_4prod?source=pWRP8eS1VsC2X59560&partner_string=P89XvN11U6RuE47077&cliddbro=14080813&clidmbro=14080806&cliddefault=14080820&clidpp=14185506" target="_blank" class="bonus-link">
+      <div class="bonus-box">
+        ✦ БОНУС: получите до 800 рублей на счет телефона за установку!
+      </div>
+    </a>
+
+  </div>
+
+  <div id="links-content" class="container links-container hidden"></div>
+
 </body>
 </html>
